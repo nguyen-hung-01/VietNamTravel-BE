@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Danh mục</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Quản lý Danh mục</h1>
+      <form id="category-form">
+        <input type="hidden" id="category_id" />
+        <input
+          type="text"
+          id="category_name"
+          placeholder="Tên danh mục"
+          required
+        />
+        <button type="submit">Thêm / Cập nhật</button>
+      </form>
+      <div id="categories"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
