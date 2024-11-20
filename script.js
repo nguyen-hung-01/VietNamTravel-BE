@@ -18,12 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
           const categoryItem = document.createElement("div");
           categoryItem.classList.add("category-item");
           categoryItem.innerHTML = `
-                        ${category.name}
-                        <div>
-                            <button onclick="editCategory(${category.category_id}, '${category.name}')">Sửa</button>
-                            <button onclick="deleteCategory(${category.category_id})">Xóa</button>
-                        </div>
-                    `;
+                          ${category.name}
+                          <div>
+                              <button onclick="editCategory(${category.category_id}, '${category.name}')">Sửa</button>
+                              <button onclick="deleteCategory(${category.category_id})">Xóa</button>
+                          </div>
+                      `;
           categoriesDiv.appendChild(categoryItem);
         });
       })
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (id) {
       // Cập nhật danh mục
       axios
-        .post(`${apiUrl}/update.php`, {
+        .put(`${apiUrl}/update.php`, {
           category_id: id,
           category_name: name,
         })
@@ -51,7 +51,10 @@ document.addEventListener("DOMContentLoaded", function () {
           categoryId.value = "";
         })
         .catch((error) => {
-          console.error("Có lỗi xảy ra khi cập nhật:", error);
+          console.error(
+            "Có lỗi xảy ra khi cập nhật:",
+            error.response ? error.response.data : error.message
+          );
         });
     } else {
       // Thêm mới danh mục
@@ -62,27 +65,35 @@ document.addEventListener("DOMContentLoaded", function () {
           categoryForm.reset();
         })
         .catch((error) => {
-          console.error("Có lỗi xảy ra khi thêm mới:", error);
+          console.error(
+            "Có lỗi xảy ra khi thêm mới:",
+            error.response ? error.response.data : error.message
+          );
         });
     }
   });
 
-  // Hiênr thị thông tin danh mục chỉnh sưar
+  // Hiển thị thông tin danh mục để chỉnh sửa
   window.editCategory = function (id, name) {
     categoryId.value = id;
     categoryName.value = name;
   };
 
-  //  Xóa danh mục
+  // Xóa danh mục
   window.deleteCategory = function (id) {
     if (confirm("Bạn có chắc chắn muốn xóa danh mục này?")) {
       axios
-        .post(`${apiUrl}/delete.php`, { category_id: id })
+        .delete(`${apiUrl}/delete.php`, {
+          data: { category_id: id },
+        })
         .then(() => {
           fetchCategories();
         })
         .catch((error) => {
-          console.error("Có lỗi xảy ra khi xóa:", error);
+          console.error(
+            "Có lỗi xảy ra khi xóa:",
+            error.response ? error.response.data : error.message
+          );
         });
     }
   };
